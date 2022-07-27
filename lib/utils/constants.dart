@@ -3,13 +3,16 @@
 import 'package:flutter/material.dart';
 
 const double TITLE_FONT_SIZE = 25;
-const double LABEL_FONT_SIZE = 18;
+const double LABEL_FONT_SIZE = 16;
+const double TEXT_FONT_SIZE = 20;
 const double BUTTON_FONT_SIZE = 28;
+const double BUTTON_FONT_SIZE_SMAL = 18;
 const double BUTTON_HEIGHT = 80;
 const double NO_TITLE_BUTTON_HEIGHT = 50;
 
 const double ALL_PADDING = 25;
 const Color GRAY_COLOR = Color.fromARGB(255, 155, 154, 154);
+const Color BUTTON_COLOR = Color.fromARGB(255, 246, 3, 120);
 
 const String USER_PREF_NAME = 'User';
 
@@ -41,3 +44,7 @@ const String SCR3_CAPTION = 'お客様の個人情報を入力し、次へ進ん
 //お客様情報入力画面のラベル
 const String SCR4_TITLE = 'お客様情報入力';
 const String SCR4_CAPTION = '商品情報を入力し、次へ進んでください。';
+
+//お客様情報確認画面のラベル
+const String SCR5_TITLE = 'お客様情報入力';
+const String SCR5_CAPTION = 'お客様の個人情報を確認し、次へ進んでください。';

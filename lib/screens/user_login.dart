@@ -9,6 +9,7 @@ import 'package:shibuya/screens/user_info.dart';
 import 'package:shibuya/utils/api.dart';
 
 import '../controls/appbar.dart';
+import '../controls/bottom_bar.dart';
 import '../controls/button.dart';
 import '../controls/textfield.dart';
 import '../dialogs/alertdialog.dart';
@@ -57,36 +58,11 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
               ),
               SizedBox(height: 20),
               Text(SCR2_LABEL2, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE)),
-              Expanded(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                        bottom: 110,
-                        height: BUTTON_HEIGHT,
-                        width: MediaQuery.of(context).size.width * 2 / 3,
-                        child: SBYButton(
-                            title: '次へ',
-                            onTouched: () async {
-                              await moveNext(context);
-                            })),
-                    Positioned(
-                      bottom: 40,
-                      height: NO_TITLE_BUTTON_HEIGHT,
-                      width: MediaQuery.of(context).size.width * 2 / 3,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          '<前のページへ戻る',
-                          style: TextStyle(fontSize: BUTTON_FONT_SIZE, color: GRAY_COLOR),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+              SBYBottomBar(
+                onTouched: () async {
+                  await moveNext(context);
+                },
+              ),
             ],
           ),
         ));

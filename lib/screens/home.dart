@@ -24,8 +24,7 @@ class HomeScreen extends StatelessWidget {
                 child: SBYButton(
                     title: 'スタート',
                     onTouched: () {
-                      //Navigator.push(context, SlideRightRoute(page: const SelectUser()));
-                      Navigator.push(context, SlideRightRoute(page: const ProductScreen()));
+                      Navigator.push(context, SlideRightRoute(page: const SelectUser()));
                     })),
             Positioned(
               bottom: 40,

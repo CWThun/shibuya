@@ -92,14 +92,24 @@ class _SelectUserState extends State<SelectUser> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: ALL_PADDING, top: ALL_PADDING),
-                  child: Text(SCR1_LABEL2, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE)),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: ALL_PADDING, top: ALL_PADDING),
+                    child: Visibility(
+                      visible: isAlready,
+                      child: Text(SCR1_LABEL2, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE)),
+                    ),
+                  ),
                 ),
               ),
-              SBYTextField(hint: '医療機関名', controller: medicanName),
+              Expanded(
+                child: Visibility(
+                  visible: isAlready,
+                  child: SBYTextField(hint: '医療機関名', controller: medicanName),
+                ),
+              ),
               SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -110,7 +120,7 @@ class _SelectUserState extends State<SelectUser> {
                 padding: const EdgeInsets.all(ALL_PADDING),
                 child: SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 3,
+                  height: MediaQuery.of(context).size.height / 3.2,
                   child: Container(
                     decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/listBackground.png'), fit: BoxFit.fill)),
                     child: Column(

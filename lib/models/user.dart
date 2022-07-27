@@ -23,7 +23,7 @@ class User {
     address = map[Fields.USER_ADDRESS];
     tell = map[Fields.USER_TELL];
     signature = map[Fields.USER_SIGNATURE];
-    code = 100;
+    code = 200;
   }
 
   User.fromCode(int code) {

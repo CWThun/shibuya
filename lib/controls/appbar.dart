@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:shibuya/utils/constants.dart';
 
@@ -14,17 +16,19 @@ class SBYAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        leading: Padding(
-          child: Image.asset(
-            'assets/images/logo.png',
-            fit: BoxFit.scaleDown,
+        leading: FittedBox(
+          child: Padding(
+            child: Image.asset(
+              'assets/images/logo.png',
+              fit: BoxFit.contain,
+            ),
+            padding: const EdgeInsets.only(left: 20),
           ),
-          padding: const EdgeInsets.only(left: 20, top: 13, bottom: 13),
         ),
         title: Center(
           child: Text(
             title,
-            style: const TextStyle(color: Colors.black, fontSize: TITLE_FONT_SIZE, fontFamily: 'ヒラギノ角ゴ Pro W3'),
+            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: TITLE_FONT_SIZE, fontFamily: 'ヒラギノ角ゴ Pro W3'),
           ),
         ));
   }

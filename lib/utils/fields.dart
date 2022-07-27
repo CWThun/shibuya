@@ -14,4 +14,9 @@ class Fields {
   //店舗
   static String SHOP_ID = 'shop_id';
   static String SHOP_NAME = 'shop_name';
+
+  //商品
+  static String ITEM_ID = 'item_id';
+  static String ITEM_CODE = 'item_code';
+  static String ITEM_NAME = 'item_name';
 }

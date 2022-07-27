@@ -1,7 +1,13 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
+import 'package:shibuya/controls/item_element.dart';
+import 'package:shibuya/controls/textfield.dart';
 
 import '../controls/appbar.dart';
 import '../controls/button.dart';
+import '../controls/title.dart';
+import '../controls/user_label.dart';
 import '../dialogs/shopdialog.dart';
 import '../utils/constants.dart';
 
@@ -13,6 +19,9 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  final TextEditingController controller = TextEditingController();
+  String shopName = 'ここに店舗名が入ります';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,45 +31,61 @@ class _ProductScreenState extends State<ProductScreen> {
         width: double.infinity,
         decoration: const BoxDecoration(color: Color.fromARGB(255, 35, 0, 1)),
         child: Column(children: [
-          const SizedBox(height: 20),
-          const Text(
-            SCR4_CAPTION,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, height: 1),
-          ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.all(ALL_PADDING),
-            child: Container(
-              decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(width: 1.5, color: Colors.grey)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: SizedBox(width: 150, child: Text('店舗名', style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, left: ALL_PADDING),
-                    child: TextButton(
-                      child: const Text('ここに店舗名が入ります', style: TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE)),
-                      onPressed: () {
-                        showDialog(context: context, builder: (context) => ShopSelectDialog());
-                      },
-                    ),
-                  ),
-                  const Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Icon(Icons.touch_app, color: Colors.white),
-                    ),
-                  )
-                ],
+          const SBYScreenTitle(title: SCR4_CAPTION),
+          SBYItemElement(children: [
+            const SBYLabel(label: '店舗名'),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0, left: ALL_PADDING),
+              child: TextButton(
+                child: Text(shopName, style: const TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE)),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => ShopSelectDialog(
+                            onChanged: (value) {
+                              setState(() {
+                                shopName = value;
+                              });
+                            },
+                          ));
+                },
               ),
             ),
-          ),
+            const Expanded(
+              child: Align(alignment: Alignment.centerRight, child: Icon(Icons.touch_app, color: Colors.white)),
+            )
+          ]),
+          SBYItemElement(children: [
+            const SBYLabel(label: '店舗名'),
+            SizedBox(
+              width: 300,
+              child: SBYTextField(
+                hint: 'ここにJANコードが入れます。',
+                controller: controller,
+                noPadding: true,
+                fontSize: TITLE_FONT_SIZE,
+              ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: MaterialButton(
+                  onPressed: () {},
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(image: AssetImage('assets/images/smallWhiteButton.png'), fit: BoxFit.fill),
+                    ),
+                    child: const Text(
+                      '呼び出し',
+                      style: TextStyle(color: BUTTON_COLOR, fontSize: BUTTON_FONT_SIZE_SMAL, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ]),
           Expanded(
             child: Stack(
               alignment: Alignment.center,

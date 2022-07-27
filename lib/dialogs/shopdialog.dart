@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shibuya/models/shop.dart';
 import 'package:shibuya/utils/api.dart';
+import 'package:shibuya/utils/constants.dart';
 
 import 'alertdialog.dart';
 
 class ShopSelectDialog extends StatefulWidget {
-  const ShopSelectDialog({Key? key}) : super(key: key);
+  final ValueChanged onChanged;
+  ShopSelectDialog({Key? key, required this.onChanged}) : super(key: key);
 
   @override
   State<ShopSelectDialog> createState() => _ShopSelectDialogState();
@@ -42,9 +44,23 @@ class _ShopSelectDialogState extends State<ShopSelectDialog> {
                   itemCount: shops.length,
                   itemBuilder: (context, index) {
                     final shop = shops[index];
-                    return ListTile(title: Text(shop.shopName));
+                    return ListTile(
+                        title: Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: (() {
+                          widget.onChanged(shop.shopName);
+                          Navigator.pop(context);
+                        }),
+                        child: Text(
+                          shop.shopName,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(fontSize: TITLE_FONT_SIZE, fontWeight: FontWeight.w600, color: Colors.black),
+                        ),
+                      ),
+                    ));
                   },
-                  separatorBuilder: (context, index) => const Divider(),
+                  separatorBuilder: (context, index) => const Divider(thickness: 1.5),
                 ),
               ),
       ),

@@ -5,12 +5,14 @@ import 'dart:io';
 
 import 'package:shibuya/models/shop.dart';
 
+import '../models/item.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 
 const String ROOT_PATH = 'http://sby-info.com';
 const String API_USER_SEARCH = 'api/user.json';
 const String API_SHOP_LIST = 'api/shop.json';
+const String API_ITEM_DETAIL = 'api/item.json';
 
 const headers = <String, String>{'content-type': 'application/json'};
 
@@ -46,6 +48,24 @@ class ApiUtil {
         return lst.map((e) => Shop.fromMap(e)).toList();
       } else {
         return List.empty();
+      }
+    } on Exception catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  ///商品情報取得
+  ///@itemCode 商品コード
+  static Future<ItemInfo> getItem(String itemCode) async {
+    try {
+      final ret = await post(API_ITEM_DETAIL, {'item_code': itemCode});
+      var body = json.decode(ret) as Map;
+      final int code = body['code'];
+      //ユーザ存在
+      if (code == 200) {
+        return ItemInfo.fromMap(body['item']);
+      } else {
+        return ItemInfo.fromCode(code);
       }
     } on Exception catch (error) {
       throw Exception(error);

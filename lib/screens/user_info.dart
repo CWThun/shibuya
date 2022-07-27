@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shibuya/models/user.dart';
 import 'package:shibuya/screens/product.dart';
+import 'package:shibuya/screens/user_confirm.dart';
 
 import '../controls/appbar.dart';
+import '../controls/bottom_bar.dart';
 import '../controls/button.dart';
 import '../controls/textfield.dart';
 import '../utils/constants.dart';
@@ -51,36 +53,11 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               SBYTextField(hint: '郵便番号（Zip Code）', controller: zipController),
               SBYTextField(hint: 'ご住所（Address）', controller: addressController),
               SBYTextField(hint: 'お電話番号（Phone）', controller: phoneController),
-              Expanded(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                        bottom: 110,
-                        height: BUTTON_HEIGHT,
-                        width: MediaQuery.of(context).size.width * 2 / 3,
-                        child: SBYButton(
-                            title: '次へ',
-                            onTouched: () {
-                              Navigator.push(context, SlideRightRoute(page: const ProductScreen()));
-                            })),
-                    Positioned(
-                      bottom: 40,
-                      height: NO_TITLE_BUTTON_HEIGHT,
-                      width: MediaQuery.of(context).size.width * 2 / 3,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text(
-                          '<前のページへ戻る',
-                          style: TextStyle(fontSize: BUTTON_FONT_SIZE, color: GRAY_COLOR),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+              SBYBottomBar(
+                onTouched: () {
+                  Navigator.push(context, SlideRightRoute(page: UserConfirmScreen(user: widget.user)));
+                },
+              ),
             ],
           ),
         ));
