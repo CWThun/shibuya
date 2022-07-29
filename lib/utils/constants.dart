@@ -19,6 +19,14 @@ const String USER_PREF_NAME = 'User';
 //画面毎のテキスト
 const String CONDITION_ONE = 'コンタクトレンズは高度管理医療機器です。\n医師に指示されたレンズと同じものをご使用ください。';
 
+const TextStyle textStyle = TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE);
+
+const String HINT_NAME = 'お客様の名前（Name）';
+const String HINT_FURIGANA = 'ふりがな（例しふや　はなこ）';
+const String HINT_ZIP = '郵便番号（Zip Code）';
+const String HINT_ADDRESS = 'ご住所（Address）';
+const String HINT_TEL = 'お電話番号（Phone）';
+
 //お客様情報入力画面のラベル
 const String SCR1_TITLE = 'お客様情報入力';
 const String SCR1_CAPTION = '以下の項目をご確認いただき、\nチェックおよび記入後ご購入ください。';
@@ -36,10 +44,15 @@ const String SCR2_LABEL2 = '当社からキャンペンーン等のご案内な�
 const String SCR2_MESSAGE_EMAIL_MISS = 'メールアドレスを記入してください。';
 const String SCR2_MESSAGE_PASSWORD_WRONG = 'パスワードは6文字以上ご記入ください。';
 const String SCR2_MESSAGE_CONFIRMPASSWORD_WRONG = 'ご記入したパスワードは一致しておりません。';
+const String SCR2_MESSAGE_LOGIN_WRONG = 'ご記入したメールアドレス、またはパスワードは正しくありません。';
 
 //お客様情報入力画面のラベル
 const String SCR3_TITLE = 'お客様情報入力';
 const String SCR3_CAPTION = 'お客様の個人情報を入力し、次へ進んでください。';
+const String SCR3_MESSAGE_NAME_MISS = 'お名前をご記入してください。';
+const String SCR3_MESSAGE_ZIP_MISS = 'お郵便番号をご記入してください。';
+const String SCR3_MESSAGE_ADDRESS_MISS = 'ご住所をご記入してください。';
+const String SCR3_MESSAGE_TEL_MISS = 'お電話番号をご記入してください';
 
 //お客様情報入力画面のラベル
 const String SCR4_TITLE = 'お客様情報入力';

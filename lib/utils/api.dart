@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:shibuya/models/shop.dart';
+import 'package:shibuya/utils/fields.dart';
 
 import '../models/item.dart';
 import '../models/user.dart';
@@ -13,6 +14,7 @@ const String ROOT_PATH = 'http://sby-info.com';
 const String API_USER_SEARCH = 'api/user.json';
 const String API_SHOP_LIST = 'api/shop.json';
 const String API_ITEM_DETAIL = 'api/item.json';
+const String API_EDIT_USER = 'api/add_user.json';
 
 const headers = <String, String>{'content-type': 'application/json'};
 
@@ -31,6 +33,21 @@ class ApiUtil {
       } else {
         return User.fromCode(code);
       }
+    } on Exception catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  ///ユーザ登録
+  ///@user ユーザ情報
+  static Future<int> modifyUser(User user) async {
+    var param = user.toMap();
+    try {
+      final ret = await post(API_EDIT_USER, param);
+      var body = json.decode(ret) as Map;
+      final int code = body['code'];
+      //ユーザ存在
+      return code;
     } on Exception catch (error) {
       throw Exception(error);
     }

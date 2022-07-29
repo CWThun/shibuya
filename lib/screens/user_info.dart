@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shibuya/models/user.dart';
-import 'package:shibuya/screens/product.dart';
 import 'package:shibuya/screens/user_confirm.dart';
 
 import '../controls/appbar.dart';
 import '../controls/bottom_bar.dart';
-import '../controls/button.dart';
 import '../controls/textfield.dart';
+import '../dialogs/alertdialog.dart';
 import '../utils/constants.dart';
 import '../utils/slide_navigator.dart';
 
@@ -34,7 +33,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     phoneController.value = TextEditingValue(text: widget.user.tell);
 
     return Scaffold(
-        appBar: const SBYAppBar(title: SCR3_TITLE),
+        appBar: SBYAppBar(title: SCR3_TITLE, userId: widget.user.userId),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -48,18 +47,54 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, height: 1),
               ),
               const SizedBox(height: 40),
-              SBYTextField(hint: 'お客様の名前（Name）', controller: nameController),
-              SBYTextField(hint: 'ふりがな（例しふや　はなこ）', controller: kanaController),
-              SBYTextField(hint: '郵便番号（Zip Code）', controller: zipController),
-              SBYTextField(hint: 'ご住所（Address）', controller: addressController),
-              SBYTextField(hint: 'お電話番号（Phone）', controller: phoneController),
+              SBYTextField(hint: HINT_NAME, controller: nameController),
+              SBYTextField(hint: HINT_FURIGANA, controller: kanaController),
+              SBYTextField(hint: HINT_ZIP, controller: zipController),
+              SBYTextField(hint: HINT_ADDRESS, controller: addressController),
+              SBYTextField(hint: HINT_TEL, controller: phoneController),
               SBYBottomBar(
                 onTouched: () {
-                  Navigator.push(context, SlideRightRoute(page: UserConfirmScreen(user: widget.user)));
+                  moveNext();
                 },
               ),
             ],
           ),
         ));
+  }
+
+  String check() {
+    if (nameController.value.text == '') {
+      return SCR3_MESSAGE_NAME_MISS;
+    }
+    if (zipController.value.text == '') {
+      return SCR3_MESSAGE_ZIP_MISS;
+    }
+    if (addressController.value.text == '') {
+      return SCR3_MESSAGE_ADDRESS_MISS;
+    }
+    if (phoneController.value.text == '') {
+      return SCR3_MESSAGE_TEL_MISS;
+    }
+    return '';
+  }
+
+  void moveNext() {
+    String errorMsg = check();
+    if (errorMsg != '') {
+      showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: errorMsg));
+    } else {
+      try {
+        setState(() {
+          widget.user.nameKanji = nameController.value.text;
+          widget.user.nameRomanji = kanaController.value.text;
+          widget.user.postCode = zipController.value.text;
+          widget.user.address = addressController.value.text;
+          widget.user.tell = phoneController.value.text;
+        });
+        Navigator.push(context, SlideRightRoute(page: UserConfirmScreen(user: widget.user)));
+      } on Exception catch (error) {
+        showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
+      }
+    }
   }
 }

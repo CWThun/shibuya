@@ -9,6 +9,7 @@ class User {
   String postCode = '';
   String address = '';
   String tell = '';
+  String medicalInstitution = '';
   String signature = '';
   int code = 0;
 
@@ -23,23 +24,22 @@ class User {
     address = map[Fields.USER_ADDRESS];
     tell = map[Fields.USER_TELL];
     signature = map[Fields.USER_SIGNATURE];
-    code = 200;
   }
 
-  User.fromCode(int code) {
-    code = code;
+  User.fromCode(int responseCode) {
+    code = responseCode;
   }
 
   Map<String, dynamic> toMap() {
     return {
-      '$Fields.USER_ID': userId,
-      '$Fields.USER_PASSWORD': password,
-      '$Fields.USER_NAME_KANJI': nameKanji,
-      '$Fields.USER_NAME_ROMAJI': nameRomanji,
-      '$Fields.USER_POSTCODE': postCode,
-      '$Fields.USER_ADDRESS': address,
-      '$Fields.USER_TELL': tell,
-      '$Fields.USER_SIGNATURE': signature,
+      '${Fields.USER_ID}': userId,
+      '${Fields.USER_PASSWORD}': password,
+      '${Fields.USER_NAME_KANJI}': nameKanji,
+      '${Fields.USER_NAME_ROMAJI}': nameRomanji,
+      '${Fields.USER_POSTCODE}': postCode,
+      '${Fields.USER_ADDRESS}': address,
+      '${Fields.USER_TELL}': tell,
+      '${Fields.USER_MEDICAL}': medicalInstitution
     };
   }
 }

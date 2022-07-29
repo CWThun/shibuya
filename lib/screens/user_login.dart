@@ -5,19 +5,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shibuya/dialogs/loadingdialog.dart';
+import 'package:shibuya/models/user.dart';
 import 'package:shibuya/screens/user_info.dart';
 import 'package:shibuya/utils/api.dart';
 
 import '../controls/appbar.dart';
 import '../controls/bottom_bar.dart';
-import '../controls/button.dart';
 import '../controls/textfield.dart';
 import '../dialogs/alertdialog.dart';
 import '../utils/constants.dart';
 import '../utils/slide_navigator.dart';
 
 class LoginUserScreen extends StatefulWidget {
-  const LoginUserScreen({Key? key}) : super(key: key);
+  final User user;
+  const LoginUserScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<LoginUserScreen> createState() => _LoginUserScreenState();
@@ -30,7 +31,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const SBYAppBar(title: SCR2_TITLE),
+        appBar: SBYAppBar(title: SCR2_TITLE),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -82,14 +83,24 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
     } else {
       try {
         showDialog(context: context, builder: (context) => SBYLoading());
-        var user = await ApiUtil.searchUser(mailController.value.text, passwordController.value.text);
-
-        //final SharedPreferences prefs = await SharedPreferences.getInstance();
-        //await prefs.setString(USER_PREF_NAME, json.encode(user.toMap()));
+        var loginUser = await ApiUtil.searchUser(mailController.value.text, passwordController.value.text);
 
         Navigator.pop(context);
-        Navigator.push(context, SlideRightRoute(page: UserInfoScreen(user: user)));
+
+        //メールかパスワードは間違い
+        if (loginUser.code == 202) {
+          showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: SCR2_MESSAGE_LOGIN_WRONG));
+          return;
+        }
+        //新規
+        else if (loginUser.code == 203) {
+          loginUser = User();
+        }
+        loginUser.medicalInstitution = widget.user.medicalInstitution;
+
+        Navigator.push(context, SlideRightRoute(page: UserInfoScreen(user: loginUser)));
       } on Exception catch (error) {
+        Navigator.pop(context);
         showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
       }
     }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:shibuya/controls/textfield.dart';
 import 'package:shibuya/dialogs/alertdialog.dart';
+import 'package:shibuya/models/user.dart';
 import 'package:shibuya/screens/user_info.dart';
 import 'package:shibuya/screens/user_login.dart';
 
@@ -29,7 +30,7 @@ class _SelectUserState extends State<SelectUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const SBYAppBar(title: SCR1_TITLE),
+        appBar: SBYAppBar(title: SCR1_TITLE),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -199,14 +200,15 @@ class _SelectUserState extends State<SelectUser> {
                       String errorMsg = '';
                       if (isAlready && medicanName.value.text == '') {
                         errorMsg = SCR1_MESSAGE_MISS;
-                      }
-                      if (!chooseOne || !chooseTwo || !chooseThree) {
+                      } else if (!chooseOne || !chooseTwo || !chooseThree) {
                         errorMsg = SCR1_MESSAGE_NOCHECK;
                       }
                       if (errorMsg != '') {
                         showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: errorMsg));
                       } else {
-                        Navigator.push(context, SlideRightRoute(page: LoginUserScreen()));
+                        final User user = User();
+                        user.medicalInstitution = medicanName.value.text;
+                        Navigator.push(context, SlideRightRoute(page: LoginUserScreen(user: user)));
                       }
                     }),
               )

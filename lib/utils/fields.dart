@@ -10,6 +10,7 @@ class Fields {
   static String USER_ADDRESS = 'address';
   static String USER_TELL = 'tell';
   static String USER_SIGNATURE = 'signature';
+  static String USER_MEDICAL = 'medical_institution';
 
   //店舗
   static String SHOP_ID = 'shop_id';

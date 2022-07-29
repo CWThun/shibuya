@@ -3,8 +3,11 @@ import 'package:shibuya/controls/bottom_bar.dart';
 import 'package:shibuya/controls/title.dart';
 import 'package:shibuya/controls/user_label.dart';
 import 'package:shibuya/screens/product.dart';
+import 'package:shibuya/utils/api.dart';
 
 import '../controls/appbar.dart';
+import '../dialogs/alertdialog.dart';
+import '../dialogs/loadingdialog.dart';
 import '../models/user.dart';
 import '../utils/constants.dart';
 import '../utils/slide_navigator.dart';
@@ -16,7 +19,7 @@ class UserConfirmScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SBYAppBar(title: SCR5_TITLE),
+      appBar: SBYAppBar(title: SCR3_TITLE, userId: user.userId),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -30,13 +33,24 @@ class UserConfirmScreen extends StatelessWidget {
             SBYUserLabel(label: 'ご住所（Address）', value: user.address),
             SBYUserLabel(label: 'お電話番号（Phone）', value: user.tell),
             SBYBottomBar(
-              onTouched: () {
-                Navigator.push(context, SlideRightRoute(page: const ProductScreen()));
+              onTouched: () async {
+                await saveUser(context);
               },
             )
           ],
         ),
       ),
     );
+  }
+
+  Future<void> saveUser(BuildContext context) async {
+    try {
+      showDialog(context: context, builder: (context) => const SBYLoading());
+      await ApiUtil.modifyUser(user);
+      Navigator.pop(context);
+      Navigator.push(context, SlideRightRoute(page: const ProductScreen()));
+    } on Exception catch (error) {
+      showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
+    }
   }
 }

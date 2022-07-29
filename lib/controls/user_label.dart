@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import '../utils/constants.dart';
@@ -32,12 +34,13 @@ class SBYUserLabel extends StatelessWidget {
 
 class SBYLabel extends StatelessWidget {
   final String label;
-  const SBYLabel({Key? key, required this.label}) : super(key: key);
+  double width;
+  SBYLabel({Key? key, required this.label, this.width = 180}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: SizedBox(width: 180, child: Text(label, style: const TextStyle(color: Colors.grey, fontSize: LABEL_FONT_SIZE))));
+        child: SizedBox(width: width, child: Text(label, style: const TextStyle(color: Colors.grey, fontSize: LABEL_FONT_SIZE))));
   }
 }

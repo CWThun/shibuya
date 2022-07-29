@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shibuya/controls/item_element.dart';
 import 'package:shibuya/controls/textfield.dart';
 
@@ -21,11 +22,13 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final TextEditingController controller = TextEditingController();
   String shopName = 'ここに店舗名が入ります';
+  DateTime day = DateTime.now();
+  DateFormat outputFormat = DateFormat('yyyy年MM月dd日');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SBYAppBar(title: SCR4_TITLE),
+      appBar: SBYAppBar(title: SCR4_TITLE),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -33,11 +36,11 @@ class _ProductScreenState extends State<ProductScreen> {
         child: Column(children: [
           const SBYScreenTitle(title: SCR4_CAPTION),
           SBYItemElement(children: [
-            const SBYLabel(label: '店舗名'),
+            SBYLabel(label: '店舗名', width: 140),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0, left: ALL_PADDING),
               child: TextButton(
-                child: Text(shopName, style: const TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE)),
+                child: Text(shopName, style: textStyle),
                 onPressed: () {
                   showDialog(
                       context: context,
@@ -52,13 +55,32 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
             ),
             const Expanded(
-              child: Align(alignment: Alignment.centerRight, child: Icon(Icons.touch_app, color: Colors.white)),
+              child: Align(alignment: Alignment.centerRight, child: Icon(Icons.arrow_drop_down, color: Colors.white, size: 40)),
             )
           ]),
           SBYItemElement(children: [
-            const SBYLabel(label: '店舗名'),
+            SBYLabel(label: '年月日', width: 140),
+            TextButton(
+                onPressed: () async {
+                  await selectDate(context);
+                },
+                child: Text(outputFormat.format(day), style: textStyle)),
+            Expanded(
+              child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () async {
+                      await selectDate(context);
+                    },
+                    child: const Icon(Icons.arrow_drop_down, color: Colors.white, size: 40),
+                  )),
+            ),
+          ]),
+          SBYItemElement(children: [
+            SBYLabel(label: 'JANコード', width: 140),
             SizedBox(
-              width: 300,
+              width: 400,
               child: SBYTextField(
                 hint: 'ここにJANコードが入れます。',
                 controller: controller,
@@ -67,38 +89,41 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
             ),
             Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: MaterialButton(
-                  onPressed: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(image: AssetImage('assets/images/smallWhiteButton.png'), fit: BoxFit.fill),
-                    ),
-                    child: const Text(
-                      '呼び出し',
-                      style: TextStyle(color: BUTTON_COLOR, fontSize: BUTTON_FONT_SIZE_SMAL, fontWeight: FontWeight.bold),
-                    ),
+              child: MaterialButton(
+                onPressed: () {},
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(image: AssetImage('assets/images/smallWhiteButton.png'), fit: BoxFit.fill),
+                  ),
+                  child: const Text(
+                    '呼び出し',
+                    style: TextStyle(color: BUTTON_COLOR, fontSize: BUTTON_FONT_SIZE_SMAL, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
             ),
           ]),
+          SBYItemElement(
+            children: [
+              SBYLabel(label: '一般的名称(商品名)', width: 140),
+            ],
+          ),
           Expanded(
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Positioned(
-                    bottom: 110,
+                    bottom: 160,
                     height: BUTTON_HEIGHT,
                     width: MediaQuery.of(context).size.width * 2 / 3,
-                    child: SBYButton(
-                        title: '次へ',
-                        onTouched: () {
-                          //Navigator.push(context, SlideRightRoute(page: const SelectUser()));
-                        })),
+                    child: SBYButton(title: '次へ', onTouched: () {})),
+                Positioned(
+                    bottom: 90,
+                    height: NO_TITLE_BUTTON_HEIGHT,
+                    width: MediaQuery.of(context).size.width * 2 / 3,
+                    child: SBYButton(title: '商品を追加する', isWhite: true, onTouched: () {})),
                 Positioned(
                   bottom: 40,
                   height: NO_TITLE_BUTTON_HEIGHT,
@@ -119,5 +144,18 @@ class _ProductScreenState extends State<ProductScreen> {
         ]),
       ),
     );
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    var date = await showDatePicker(
+      locale: const Locale("ja"),
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime.now().add(const Duration(days: 360)),
+    );
+    setState(() {
+      day = date!;
+    });
   }
 }
