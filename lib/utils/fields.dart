@@ -3,6 +3,7 @@
 class Fields {
   //ユーザ
   static String USER_ID = 'user_id';
+  static String USER_EMAIL = 'email';
   static String USER_PASSWORD = 'password';
   static String USER_NAME_KANJI = 'name_kanji';
   static String USER_NAME_ROMAJI = 'name_romanji';

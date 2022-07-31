@@ -15,8 +15,8 @@ class ItemInfo {
     code = 200;
   }
 
-  ItemInfo.fromCode(int code) {
-    code = code;
+  ItemInfo.fromCode(int responseCode) {
+    code = responseCode;
   }
 
   Map<String, dynamic> toMap() {

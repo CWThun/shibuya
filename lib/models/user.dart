@@ -1,8 +1,11 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:shibuya/utils/fields.dart';
 
 class User {
   String userId = '';
+  String email = '';
   String password = '';
   String nameKanji = '';
   String nameRomanji = '';
@@ -30,16 +33,17 @@ class User {
     code = responseCode;
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, String> toMap() {
     return {
-      '${Fields.USER_ID}': userId,
-      '${Fields.USER_PASSWORD}': password,
-      '${Fields.USER_NAME_KANJI}': nameKanji,
-      '${Fields.USER_NAME_ROMAJI}': nameRomanji,
-      '${Fields.USER_POSTCODE}': postCode,
-      '${Fields.USER_ADDRESS}': address,
-      '${Fields.USER_TELL}': tell,
-      '${Fields.USER_MEDICAL}': medicalInstitution
+      Fields.USER_ID: userId,
+      Fields.USER_EMAIL: email,
+      Fields.USER_PASSWORD: password,
+      Fields.USER_NAME_KANJI: nameKanji,
+      Fields.USER_NAME_ROMAJI: nameRomanji,
+      Fields.USER_POSTCODE: postCode,
+      Fields.USER_ADDRESS: address,
+      Fields.USER_TELL: tell,
+      Fields.USER_MEDICAL: medicalInstitution
     };
   }
 }

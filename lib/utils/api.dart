@@ -24,7 +24,7 @@ class ApiUtil {
   ///@password パスワード
   static Future<User> searchUser(String email, String password) async {
     try {
-      final ret = await post(API_USER_SEARCH, {'email': email, 'password': password});
+      final ret = await post(API_USER_SEARCH, {Fields.USER_EMAIL: email, 'password': password});
       var body = json.decode(ret) as Map;
       final int code = body['code'];
       //ユーザ存在

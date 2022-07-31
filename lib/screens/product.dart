@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shibuya/controls/item_element.dart';
 import 'package:shibuya/controls/textfield.dart';
+import 'package:shibuya/utils/api.dart';
 
 import '../controls/appbar.dart';
 import '../controls/button.dart';
 import '../controls/title.dart';
 import '../controls/user_label.dart';
+import '../dialogs/alertdialog.dart';
+import '../dialogs/loadingdialog.dart';
 import '../dialogs/shopdialog.dart';
 import '../utils/constants.dart';
 
@@ -22,13 +25,14 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final TextEditingController controller = TextEditingController();
   String shopName = 'ここに店舗名が入ります';
+  String itemName = '';
   DateTime day = DateTime.now();
   DateFormat outputFormat = DateFormat('yyyy年MM月dd日');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBYAppBar(title: SCR4_TITLE),
+      appBar: const SBYAppBar(title: SCR4_TITLE),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -90,7 +94,9 @@ class _ProductScreenState extends State<ProductScreen> {
             ),
             Expanded(
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await loadItemDetail(context);
+                },
                 child: Container(
                   alignment: Alignment.center,
                   height: 40,
@@ -108,6 +114,12 @@ class _ProductScreenState extends State<ProductScreen> {
           SBYItemElement(
             children: [
               SBYLabel(label: '一般的名称(商品名)', width: 140),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Expanded(
+                  child: Text(itemName, style: const TextStyle(fontSize: BUTTON_FONT_SIZE, color: Colors.white)),
+                ),
+              )
             ],
           ),
           Expanded(
@@ -157,5 +169,28 @@ class _ProductScreenState extends State<ProductScreen> {
     setState(() {
       day = date!;
     });
+  }
+
+  Future<void> loadItemDetail(BuildContext context) async {
+    if (controller.value.text == '') {
+      showDialog(context: context, builder: (context) => const SBYAlert(title: 'エラー', content: 'JANコードをご記入してください。'));
+      return;
+    }
+    try {
+      showDialog(context: context, builder: (context) => const SBYLoading());
+      final item = await ApiUtil.getItem(controller.value.text);
+      Navigator.pop(context);
+
+      if (item.code == 200) {
+        setState(() {
+          itemName = item.itemName;
+        });
+      } else {
+        showDialog(context: context, builder: (context) => const SBYAlert(title: 'エラー', content: '商品検索でエラー発生しています。'));
+      }
+    } on Exception catch (error) {
+      Navigator.pop(context);
+      showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
+    }
   }
 }

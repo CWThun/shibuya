@@ -97,6 +97,8 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
           loginUser = User();
         }
         loginUser.medicalInstitution = widget.user.medicalInstitution;
+        loginUser.password = passwordController.value.text;
+        loginUser.email = mailController.value.text;
 
         Navigator.push(context, SlideRightRoute(page: UserInfoScreen(user: loginUser)));
       } on Exception catch (error) {

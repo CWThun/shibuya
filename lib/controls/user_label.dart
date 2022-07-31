@@ -7,7 +7,8 @@ import '../utils/constants.dart';
 class SBYUserLabel extends StatelessWidget {
   final String label;
   final String value;
-  const SBYUserLabel({Key? key, required this.label, required this.value}) : super(key: key);
+  double width;
+  SBYUserLabel({Key? key, required this.label, required this.value, this.width = 180}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class SBYUserLabel extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SBYLabel(label: label),
+            SBYLabel(label: label, width: width),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0, left: ALL_PADDING),
               child: Text(value, style: const TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE)),

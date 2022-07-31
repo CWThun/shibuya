@@ -27,11 +27,12 @@ class UserConfirmScreen extends StatelessWidget {
         child: Column(
           children: [
             const SBYScreenTitle(title: SCR5_CAPTION),
-            SBYUserLabel(label: 'お客様の名前（Name）', value: user.nameKanji),
-            SBYUserLabel(label: 'ふりがな', value: user.nameRomanji),
-            SBYUserLabel(label: '郵便番号（Zip Code）', value: user.postCode),
-            SBYUserLabel(label: 'ご住所（Address）', value: user.address),
-            SBYUserLabel(label: 'お電話番号（Phone）', value: user.tell),
+            SBYUserLabel(label: 'お客様の名前（Name）', value: user.nameKanji, width: 200),
+            SBYUserLabel(label: 'ふりがな', value: user.nameRomanji, width: 200),
+            SBYUserLabel(label: '郵便番号（Zip Code）', value: user.postCode, width: 200),
+            SBYUserLabel(label: 'ご住所（Address）', value: user.address, width: 200),
+            SBYUserLabel(label: 'お電話番号（Phone）', value: user.tell, width: 200),
+            SBYUserLabel(label: 'メールアドレス（E-mail）', value: user.email, width: 200),
             SBYBottomBar(
               onTouched: () async {
                 await saveUser(context);
@@ -50,6 +51,7 @@ class UserConfirmScreen extends StatelessWidget {
       Navigator.pop(context);
       Navigator.push(context, SlideRightRoute(page: const ProductScreen()));
     } on Exception catch (error) {
+      Navigator.pop(context);
       showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
     }
   }
