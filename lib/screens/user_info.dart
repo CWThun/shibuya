@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shibuya/models/user.dart';
 import 'package:shibuya/screens/user_confirm.dart';
+import 'package:shibuya/utils/api.dart';
 
 import '../controls/appbar.dart';
 import '../controls/bottom_bar.dart';
@@ -49,7 +50,13 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               const SizedBox(height: 40),
               SBYTextField(hint: HINT_NAME, controller: nameController),
               SBYTextField(hint: HINT_FURIGANA, controller: kanaController),
-              SBYTextField(hint: HINT_ZIP, controller: zipController),
+              SBYTextField(
+                hint: HINT_ZIP,
+                controller: zipController,
+                focused: (value) async {
+                  await getAddress(value);
+                },
+              ),
               SBYTextField(hint: HINT_ADDRESS, controller: addressController),
               SBYTextField(hint: HINT_TEL, controller: phoneController),
               SBYBottomBar(
@@ -95,6 +102,18 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
       } on Exception catch (error) {
         showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
       }
+    }
+  }
+
+  Future<void> getAddress(String zipCode) async {
+    if (zipCode == '' || zipCode.length < 7) return;
+    try {
+      var address = await ApiUtil.getAddress(zipCode);
+      if (address.code == 200) {
+        addressController.value = TextEditingValue(text: '${address.pref}${address.city}${address.town}');
+      }
+    } on Exception catch (error) {
+      showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
     }
   }
 }

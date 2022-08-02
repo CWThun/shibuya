@@ -21,6 +21,9 @@ const String CONDITION_ONE = 'コンタクトレンズは高度管理医療機�
 
 const TextStyle textStyle = TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE);
 
+const String HINT_EMAIL = 'メールアドレス';
+const String HINT_PASSWORD = 'パスワード';
+const String HINT_PASSWORD_CONFIRM = '確認のためにもう一度パスワードを入力してください。';
 const String HINT_NAME = 'お客様の名前（Name）';
 const String HINT_FURIGANA = 'ふりがな（例しふや　はなこ）';
 const String HINT_ZIP = '郵便番号（Zip Code）';
@@ -42,9 +45,12 @@ const String SCR2_CAPTION = 'メールアドレスとパスワードを入力し
 const String SCR2_LABEL1 = 'パスワードを忘れ方';
 const String SCR2_LABEL2 = '当社からキャンペンーン等のご案内などをさせたいただく場合があります。ご了承ください。';
 const String SCR2_MESSAGE_EMAIL_MISS = 'メールアドレスを記入してください。';
+const String SCR2_MESSAGE_EMAIL_WRONG = 'メールの形式が間違っています。';
+const String SCR2_MESSAGE_EMAIL_NOT_EXIST = 'メールアドレスは存在しません。';
 const String SCR2_MESSAGE_PASSWORD_WRONG = 'パスワードは6文字以上ご記入ください。';
 const String SCR2_MESSAGE_CONFIRMPASSWORD_WRONG = 'ご記入したパスワードは一致しておりません。';
 const String SCR2_MESSAGE_LOGIN_WRONG = 'ご記入したメールアドレス、またはパスワードは正しくありません。';
+const String SCR2_MESSAGE_PASSWORD_RESET_OK = '新しいパスワードが発行されました。メールをご確認してください。';
 
 //お客様情報入力画面のラベル
 const String SCR3_TITLE = 'お客様情報入力';

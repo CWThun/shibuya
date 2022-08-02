@@ -49,7 +49,7 @@ class UserConfirmScreen extends StatelessWidget {
       showDialog(context: context, builder: (context) => const SBYLoading());
       await ApiUtil.modifyUser(user);
       Navigator.pop(context);
-      Navigator.push(context, SlideRightRoute(page: const ProductScreen()));
+      Navigator.push(context, SlideRightRoute(page: ProductScreen(user: user)));
     } on Exception catch (error) {
       Navigator.pop(context);
       showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));

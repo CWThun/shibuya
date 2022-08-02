@@ -13,10 +13,12 @@ import '../controls/user_label.dart';
 import '../dialogs/alertdialog.dart';
 import '../dialogs/loadingdialog.dart';
 import '../dialogs/shopdialog.dart';
+import '../models/user.dart';
 import '../utils/constants.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({Key? key}) : super(key: key);
+  final User user;
+  const ProductScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
@@ -32,7 +34,7 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SBYAppBar(title: SCR4_TITLE),
+      appBar: SBYAppBar(title: SCR4_TITLE, userId: widget.user.userId),
       body: Container(
         height: double.infinity,
         width: double.infinity,

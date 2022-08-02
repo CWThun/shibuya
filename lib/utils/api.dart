@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:shibuya/models/shop.dart';
 import 'package:shibuya/utils/fields.dart';
 
+import '../models/address.dart';
 import '../models/item.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,8 @@ const String API_USER_SEARCH = 'api/user.json';
 const String API_SHOP_LIST = 'api/shop.json';
 const String API_ITEM_DETAIL = 'api/item.json';
 const String API_EDIT_USER = 'api/add_user.json';
+const String API_FORGOT_PASSWORD = 'api/forget_pass.json';
+const String API_ZIP_CODE = 'api/zipcode.json';
 
 const headers = <String, String>{'content-type': 'application/json'};
 
@@ -84,6 +87,36 @@ class ApiUtil {
       } else {
         return ItemInfo.fromCode(code);
       }
+    } on Exception catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  ///パスワードリセット
+  ///@email ユーザーメール
+  static Future<int> resetPassword(String email) async {
+    try {
+      final ret = await post(API_FORGOT_PASSWORD, {Fields.USER_EMAIL: email});
+      var body = json.decode(ret) as Map;
+      final int code = body['code'];
+      //ユーザ存在
+      return code;
+    } on Exception catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  ///パスワードリセット
+  ///@email ユーザーメール
+  static Future<Address> getAddress(String zipCode) async {
+    try {
+      final ret = await post(API_ZIP_CODE, {Fields.ZIP_CODE: zipCode});
+      var body = json.decode(ret) as Map;
+      final int code = body['code'];
+      if (code == 200) {
+        return Address.fromMap(body['data']);
+      }
+      return Address.fromCode(code);
     } on Exception catch (error) {
       throw Exception(error);
     }

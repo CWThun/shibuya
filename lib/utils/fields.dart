@@ -13,6 +13,8 @@ class Fields {
   static String USER_SIGNATURE = 'signature';
   static String USER_MEDICAL = 'medical_institution';
 
+  static String ZIP_CODE = 'zipcode';
+
   //店舗
   static String SHOP_ID = 'shop_id';
   static String SHOP_NAME = 'shop_name';

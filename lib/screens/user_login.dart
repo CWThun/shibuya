@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shibuya/dialogs/loadingdialog.dart';
@@ -45,12 +46,14 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
                 style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, height: 1),
               ),
               SizedBox(height: 40),
-              SBYTextField(hint: 'メールアドレス', controller: mailController),
-              SBYTextField(hint: 'パスワード', controller: passwordController, isPassword: true),
-              SBYTextField(hint: '確認のためにもう一度パスワードを入力してください。', controller: passwordConfirmController, isPassword: true),
+              SBYTextField(hint: HINT_EMAIL, controller: mailController),
+              SBYTextField(hint: HINT_PASSWORD, controller: passwordController, isPassword: true),
+              SBYTextField(hint: HINT_PASSWORD_CONFIRM, controller: passwordConfirmController, isPassword: true),
               SizedBox(height: 20),
               TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await changePassword(context);
+                },
                 child: Text(
                   SCR2_LABEL1,
                   textAlign: TextAlign.center,
@@ -73,6 +76,8 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
     String errorMsg = '';
     if (mailController.value.text == '') {
       errorMsg = SCR2_MESSAGE_EMAIL_MISS;
+    } else if (!EmailValidator.validate(mailController.value.text)) {
+      errorMsg = SCR2_MESSAGE_EMAIL_WRONG;
     } else if (passwordController.value.text == '' || passwordController.value.text.length < 6) {
       errorMsg = SCR2_MESSAGE_PASSWORD_WRONG;
     } else if (passwordConfirmController.value.text != passwordController.value.text) {
@@ -101,6 +106,35 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
         loginUser.email = mailController.value.text;
 
         Navigator.push(context, SlideRightRoute(page: UserInfoScreen(user: loginUser)));
+      } on Exception catch (error) {
+        Navigator.pop(context);
+        showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
+      }
+    }
+  }
+
+  ///パスワードリセット
+  Future<void> changePassword(BuildContext context) async {
+    String errorMsg = '';
+    if (mailController.value.text == '') {
+      errorMsg = SCR2_MESSAGE_EMAIL_MISS;
+    } else if (!EmailValidator.validate(mailController.value.text)) {
+      errorMsg = SCR2_MESSAGE_EMAIL_WRONG;
+    }
+    if (errorMsg != '') {
+      showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: errorMsg));
+    } else {
+      try {
+        showDialog(context: context, builder: (context) => SBYLoading());
+        var returnCode = await ApiUtil.resetPassword(mailController.value.text);
+        Navigator.pop(context);
+
+        //メール存在しない
+        if (returnCode == 201) {
+          showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: SCR2_MESSAGE_EMAIL_NOT_EXIST));
+        } else {
+          showDialog(context: context, builder: (context) => SBYAlert(title: '完了', content: SCR2_MESSAGE_PASSWORD_RESET_OK));
+        }
       } on Exception catch (error) {
         Navigator.pop(context);
         showDialog(context: context, builder: (context) => SBYAlert(title: 'エラー', content: error.toString()));
