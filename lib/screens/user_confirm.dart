@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shibuya/controls/bottom_bar.dart';
 import 'package:shibuya/controls/title.dart';
 import 'package:shibuya/controls/user_label.dart';
-import 'package:shibuya/screens/product.dart';
+import 'package:shibuya/screens/product_screen.dart';
 import 'package:shibuya/utils/api.dart';
 
 import '../controls/appbar.dart';

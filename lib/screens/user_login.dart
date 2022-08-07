@@ -31,6 +31,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
   TextEditingController passwordConfirmController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait ? true : false;
     return Scaffold(
         appBar: SBYAppBar(title: SCR2_TITLE),
         body: Container(
@@ -39,17 +40,17 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
           decoration: const BoxDecoration(color: Color.fromARGB(255, 35, 0, 1)),
           child: Column(
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: isPortrait ? 20 : 10),
               Text(
                 SCR2_CAPTION,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, height: 1),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: isPortrait ? 40 : 20),
               SBYTextField(hint: HINT_EMAIL, controller: mailController),
               SBYTextField(hint: HINT_PASSWORD, controller: passwordController, isPassword: true),
               SBYTextField(hint: HINT_PASSWORD_CONFIRM, controller: passwordConfirmController, isPassword: true),
-              SizedBox(height: 20),
+              SizedBox(height: isPortrait ? 20 : 10),
               TextButton(
                 onPressed: () async {
                   await changePassword(context);
@@ -60,7 +61,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
                   style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, decoration: TextDecoration.underline),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: isPortrait ? 20 : 10),
               Text(SCR2_LABEL2, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE)),
               SBYBottomBar(
                 onTouched: () async {

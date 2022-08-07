@@ -8,9 +8,11 @@ const double TEXT_FONT_SIZE = 20;
 const double BUTTON_FONT_SIZE = 28;
 const double BUTTON_FONT_SIZE_SMAL = 18;
 const double BUTTON_HEIGHT = 80;
+const double BUTTON_HEIGHT_LANDSCAPLE = 120;
 const double NO_TITLE_BUTTON_HEIGHT = 50;
 
 const double ALL_PADDING = 25;
+const double ALL_PADDING_LANDSCAPE = 20;
 const Color GRAY_COLOR = Color.fromARGB(255, 155, 154, 154);
 const Color BUTTON_COLOR = Color.fromARGB(255, 246, 3, 120);
 

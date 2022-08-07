@@ -8,8 +8,11 @@ class SBYItemElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait ? true : false;
     return Padding(
-      padding: const EdgeInsets.all(ALL_PADDING),
+      padding: isPortrait
+          ? const EdgeInsets.all(ALL_PADDING)
+          : const EdgeInsets.only(left: ALL_PADDING, right: ALL_PADDING, bottom: ALL_PADDING_LANDSCAPE),
       child: Container(
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: 1.5, color: Colors.grey)),

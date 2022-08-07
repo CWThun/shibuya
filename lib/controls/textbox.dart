@@ -7,10 +7,10 @@ class ConditionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double fSize = MediaQuery.of(context).orientation == Orientation.portrait ? 22 : 18;
     return Text(
       title,
-      style: const TextStyle(
-          color: GRAY_COLOR, fontSize: 22, fontWeight: FontWeight.bold),
+      style: TextStyle(color: GRAY_COLOR, fontSize: fSize, fontWeight: FontWeight.bold),
     );
   }
 }

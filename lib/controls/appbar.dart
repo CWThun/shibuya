@@ -31,7 +31,8 @@ class SBYAppBar extends StatelessWidget with PreferredSizeWidget {
       title: Center(
         child: Text(
           title,
-          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: TITLE_FONT_SIZE, fontFamily: 'ヒラギノ角ゴ Pro W3'),
+          style: const TextStyle(
+              color: Color.fromARGB(255, 58, 55, 55), fontWeight: FontWeight.bold, fontSize: TITLE_FONT_SIZE, fontFamily: 'ヒラギノ角ゴ Pro W3'),
         ),
       ),
       actions: [

@@ -23,8 +23,13 @@ class SBYTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait ? true : false;
     return Padding(
-      padding: !noPadding ? const EdgeInsets.all(ALL_PADDING) : const EdgeInsets.only(left: ALL_PADDING),
+      padding: !noPadding
+          ? (isPortrait
+              ? const EdgeInsets.all(ALL_PADDING)
+              : const EdgeInsets.only(left: ALL_PADDING, right: ALL_PADDING, bottom: ALL_PADDING_LANDSCAPE))
+          : const EdgeInsets.only(left: ALL_PADDING),
       child: Focus(
         onFocusChange: ((hasFocus) {
           if (!hasFocus) {

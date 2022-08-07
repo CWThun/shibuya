@@ -9,14 +9,16 @@ class SBYBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait ? true : false;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Expanded(
       child: Stack(
         alignment: Alignment.center,
         children: [
           Positioned(
               bottom: 110,
-              height: BUTTON_HEIGHT,
-              width: MediaQuery.of(context).size.width * 2 / 3,
+              height: isPortrait ? BUTTON_HEIGHT : BUTTON_HEIGHT - 15,
+              width: isPortrait ? screenWidth * 2 / 3 : screenWidth / 3,
               child: SBYButton(
                   title: '次へ',
                   onTouched: () {
@@ -27,7 +29,7 @@ class SBYBottomBar extends StatelessWidget {
           Positioned(
             bottom: 40,
             height: NO_TITLE_BUTTON_HEIGHT,
-            width: MediaQuery.of(context).size.width * 2 / 3,
+            width: screenWidth * 2 / 3,
             child: TextButton(
               onPressed: () {
                 Navigator.pop(context);

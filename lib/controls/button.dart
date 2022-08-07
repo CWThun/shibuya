@@ -11,7 +11,6 @@ class SBYButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String img = (isWhite! ? 'bigWhiteButton.png' : 'pinkButton.png');
-    final Color color = (isWhite! ? BUTTON_COLOR : Colors.white);
     return MaterialButton(
         textColor: Colors.white,
         child: Container(
@@ -19,7 +18,7 @@ class SBYButton extends StatelessWidget {
           height: double.infinity,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/images/${img}'), fit: BoxFit.fill),
+            image: DecorationImage(image: AssetImage('assets/images/$img'), fit: BoxFit.fill),
           ),
           child: Text(
             title,

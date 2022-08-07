@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shibuya/controls/textfield.dart';
 import 'package:shibuya/dialogs/alertdialog.dart';
 import 'package:shibuya/models/user.dart';
-import 'package:shibuya/screens/user_info.dart';
 import 'package:shibuya/screens/user_login.dart';
 
 import '../controls/appbar.dart';
@@ -12,6 +11,7 @@ import '../controls/button.dart';
 import '../controls/textbox.dart';
 import '../utils/constants.dart';
 import '../utils/slide_navigator.dart';
+import '../utils/util.dart';
 
 class SelectUser extends StatefulWidget {
   const SelectUser({Key? key}) : super(key: key);
@@ -29,6 +29,8 @@ class _SelectUserState extends State<SelectUser> {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait ? true : false;
+    final allPadding = isPortrait ? ALL_PADDING : ALL_PADDING_LANDSCAPE;
     return Scaffold(
         appBar: SBYAppBar(title: SCR1_TITLE),
         body: Container(
@@ -41,42 +43,38 @@ class _SelectUserState extends State<SelectUser> {
               Text(
                 SCR1_CAPTION,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, height: 1),
+                style: TextStyle(color: Colors.white, fontSize: Utils.captionFontSize(isPortrait, context), height: 1),
               ),
               SizedBox(
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: ALL_PADDING, top: ALL_PADDING),
+                  padding: EdgeInsets.only(left: ALL_PADDING, top: allPadding),
                   child: Text(SCR1_LABEL1, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE)),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(ALL_PADDING),
+                padding: EdgeInsets.all(allPadding),
                 child: Row(
                   children: [
                     Expanded(
                         child: SizedBox(
-                      height: 60,
+                      height: (isPortrait ? 60 : 50),
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
                             isAlready = !isAlready;
                           });
                         },
-                        child: Text(
-                          '済',
-                          style: TextStyle(fontSize: BUTTON_FONT_SIZE, color: isAlready ? Colors.white : GRAY_COLOR),
-                        ),
+                        child: Text('済', style: TextStyle(fontSize: BUTTON_FONT_SIZE, color: isAlready ? Colors.white : GRAY_COLOR)),
                         style: ElevatedButton.styleFrom(
-                          primary: isAlready ? Color.fromARGB(255, 246, 3, 120) : Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(ALL_PADDING), bottomLeft: Radius.circular(ALL_PADDING))),
-                        ),
+                            primary: isAlready ? Color.fromARGB(255, 246, 3, 120) : Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(allPadding), bottomLeft: Radius.circular(allPadding)))),
                       ),
                     )),
                     Expanded(
                         child: SizedBox(
-                      height: 60,
+                      height: (isPortrait ? 60 : 50),
                       child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -85,10 +83,9 @@ class _SelectUserState extends State<SelectUser> {
                           },
                           child: Text('未', style: TextStyle(fontSize: BUTTON_FONT_SIZE, color: isAlready ? GRAY_COLOR : Colors.white)),
                           style: ElevatedButton.styleFrom(
-                            primary: isAlready ? Colors.white : Color.fromARGB(255, 246, 3, 120),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(topRight: Radius.circular(ALL_PADDING), bottomRight: Radius.circular(ALL_PADDING))),
-                          )),
+                              primary: isAlready ? Colors.white : Color.fromARGB(255, 246, 3, 120),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topRight: Radius.circular(allPadding), bottomRight: Radius.circular(allPadding))))),
                     ))
                   ],
                 ),
@@ -97,7 +94,7 @@ class _SelectUserState extends State<SelectUser> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: ALL_PADDING, top: ALL_PADDING),
+                    padding: EdgeInsets.only(left: ALL_PADDING, top: isPortrait ? ALL_PADDING : 0),
                     child: Visibility(
                       visible: isAlready,
                       child: Text(SCR1_LABEL2, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE)),
@@ -114,57 +111,68 @@ class _SelectUserState extends State<SelectUser> {
               SizedBox(
                 width: double.infinity,
                 child: Padding(
-                    padding: const EdgeInsets.only(left: ALL_PADDING, top: ALL_PADDING),
+                    padding: EdgeInsets.only(left: ALL_PADDING, top: isPortrait ? ALL_PADDING : 0),
                     child: Text(SCR1_LABEL3, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE))),
               ),
               Padding(
-                padding: const EdgeInsets.all(ALL_PADDING),
+                padding: EdgeInsets.all(allPadding),
                 child: SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 3.2,
+                  height: isPortrait ? MediaQuery.of(context).size.height / 3.2 : MediaQuery.of(context).size.height / 4,
                   child: Container(
-                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/listBackground.png'), fit: BoxFit.fill)),
+                    //decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/listBackground.png'), fit: BoxFit.fill)),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(width: 1.5),
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
                     child: Column(
                       children: [
                         Expanded(
-                            child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: ALL_PADDING, right: ALL_PADDING),
-                              child: Transform.scale(
-                                scale: 1.5,
-                                child: Checkbox(
-                                  value: chooseOne,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      chooseOne = value!;
-                                    });
-                                  },
+                            child: Container(
+                          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.5, color: Color.fromARGB(255, 207, 207, 207)))),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: ALL_PADDING, right: ALL_PADDING),
+                                child: Transform.scale(
+                                  scale: 1.2,
+                                  child: Checkbox(
+                                    value: chooseOne,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        chooseOne = value!;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                            ConditionText(title: CONDITION_ONE)
-                          ],
+                              ConditionText(title: CONDITION_ONE)
+                            ],
+                          ),
                         )),
                         Expanded(
-                            child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: ALL_PADDING, right: ALL_PADDING),
-                              child: Transform.scale(
-                                scale: 1.5,
-                                child: Checkbox(
-                                  value: chooseTwo,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      chooseTwo = value!;
-                                    });
-                                  },
+                            child: Container(
+                          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.5, color: Color.fromARGB(255, 207, 207, 207)))),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: ALL_PADDING, right: ALL_PADDING),
+                                child: Transform.scale(
+                                  scale: 1.5,
+                                  child: Checkbox(
+                                    value: chooseTwo,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        chooseTwo = value!;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                            ConditionText(title: CONDITION_ONE)
-                          ],
+                              ConditionText(title: CONDITION_ONE)
+                            ],
+                          ),
                         )),
                         Expanded(
                             child: Row(
@@ -191,9 +199,10 @@ class _SelectUserState extends State<SelectUser> {
                   ),
                 ),
               ),
+              SizedBox(height: isPortrait ? 100 : 1),
               SizedBox(
-                height: BUTTON_HEIGHT + 15,
-                width: MediaQuery.of(context).size.width * 2 / 3,
+                height: isPortrait ? BUTTON_HEIGHT + 15 : BUTTON_HEIGHT - 10,
+                width: Utils.bigButtonSize(isPortrait, context),
                 child: SBYButton(
                     title: '次へ',
                     onTouched: () {
