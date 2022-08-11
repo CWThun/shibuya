@@ -33,19 +33,16 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
   Widget build(BuildContext context) {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait ? true : false;
     return Scaffold(
-        appBar: SBYAppBar(title: SCR2_TITLE),
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(color: Color.fromARGB(255, 35, 0, 1)),
+      appBar: SBYAppBar(title: SCR2_TITLE),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(color: Color.fromARGB(255, 35, 0, 1)),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: isPortrait ? 20 : 10),
-              Text(
-                SCR2_CAPTION,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, height: 1),
-              ),
+              Text(SCR2_CAPTION, textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, height: 1)),
               SizedBox(height: isPortrait ? 40 : 20),
               SBYTextField(hint: HINT_EMAIL, controller: mailController),
               SBYTextField(hint: HINT_PASSWORD, controller: passwordController, isPassword: true),
@@ -55,22 +52,22 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
                 onPressed: () async {
                   await changePassword(context);
                 },
-                child: Text(
-                  SCR2_LABEL1,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, decoration: TextDecoration.underline),
-                ),
+                child: Text(SCR2_LABEL1,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: BUTTON_FONT_SIZE, decoration: TextDecoration.underline)),
               ),
               SizedBox(height: isPortrait ? 20 : 10),
-              Text(SCR2_LABEL2, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE)),
-              SBYBottomBar(
-                onTouched: () async {
-                  await moveNext(context);
-                },
-              ),
+              Text(SCR2_LABEL2, style: TextStyle(color: Colors.white, fontSize: LABEL_FONT_SIZE))
             ],
           ),
-        ));
+        ),
+      ),
+      bottomNavigationBar: SBYBottomBar(
+        onTouched: () async {
+          await moveNext(context);
+        },
+      ),
+    );
   }
 
   Future<void> moveNext(BuildContext context) async {

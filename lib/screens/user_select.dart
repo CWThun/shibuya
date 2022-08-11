@@ -136,7 +136,7 @@ class _SelectUserState extends State<SelectUser> {
                               Padding(
                                 padding: const EdgeInsets.only(left: ALL_PADDING, right: ALL_PADDING),
                                 child: Transform.scale(
-                                  scale: 1.2,
+                                  scale: 1.5,
                                   child: Checkbox(
                                     value: chooseOne,
                                     onChanged: (value) {

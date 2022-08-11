@@ -33,12 +33,15 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     addressController.value = TextEditingValue(text: widget.user.address);
     phoneController.value = TextEditingValue(text: widget.user.tell);
 
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait ? true : false;
+
     return Scaffold(
-        appBar: SBYAppBar(title: SCR3_TITLE, userId: widget.user.userId),
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(color: Color.fromARGB(255, 35, 0, 1)),
+      appBar: SBYAppBar(title: SCR3_TITLE, userId: widget.user.userId),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(color: Color.fromARGB(255, 35, 0, 1)),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -58,15 +61,17 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 },
               ),
               SBYTextField(hint: HINT_ADDRESS, controller: addressController),
-              SBYTextField(hint: HINT_TEL, controller: phoneController),
-              SBYBottomBar(
-                onTouched: () {
-                  moveNext();
-                },
-              ),
+              SBYTextField(hint: HINT_TEL, controller: phoneController, isDigitOnly: true),
             ],
           ),
-        ));
+        ),
+      ),
+      bottomNavigationBar: SBYBottomBar(
+        onTouched: () {
+          moveNext();
+        },
+      ),
+    );
   }
 
   String check() {

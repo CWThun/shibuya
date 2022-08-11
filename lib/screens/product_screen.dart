@@ -132,34 +132,41 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
               SBYItemElement(
                 children: [
-                  SBYLabel(label: '一般的名称(商品名)', width: 140),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Expanded(
-                        child:
-                            Text(itemName, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: BUTTON_FONT_SIZE, color: Colors.white))),
+                  SBYLabel(label: '度数', width: 140),
+                  Expanded(
+                    child: SBYTextField(
+                      hint: 'ここに度数が入れます。',
+                      controller: controller,
+                      noPadding: true,
+                      fontSize: TITLE_FONT_SIZE,
+                    ),
                   )
                 ],
               ),
               SBYItemElement(
                 children: [
-                  SBYLabel(label: '一般的名称(商品名)', width: 140),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Expanded(
-                        child:
-                            Text(itemName, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: BUTTON_FONT_SIZE, color: Colors.white))),
+                  SBYLabel(label: '製造番号', width: 140),
+                  Expanded(
+                    child: SBYTextField(
+                      hint: 'ここに製造番号が入れます。',
+                      controller: controller,
+                      noPadding: true,
+                      fontSize: TITLE_FONT_SIZE,
+                    ),
                   )
                 ],
               ),
               SBYItemElement(
                 children: [
-                  SBYLabel(label: '一般的名称(商品名)', width: 140),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Expanded(
-                        child:
-                            Text(itemName, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: BUTTON_FONT_SIZE, color: Colors.white))),
+                  SBYLabel(label: '数量', width: 140),
+                  Expanded(
+                    child: SBYTextField(
+                      hint: 'ここに数量が入れます。',
+                      controller: controller,
+                      noPadding: true,
+                      isNumber: true,
+                      fontSize: TITLE_FONT_SIZE,
+                    ),
                   )
                 ],
               ),

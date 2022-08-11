@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../utils/constants.dart';
 
@@ -7,12 +8,16 @@ class SBYTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String value)? focused;
   bool isPassword;
+  bool isNumber;
+  bool isDigitOnly;
   bool noPadding;
   double fontSize;
   SBYTextField(
       {Key? key,
       this.isPassword = false,
       this.noPadding = false,
+      this.isNumber = false,
+      this.isDigitOnly = false,
       this.fontSize = TEXT_FONT_SIZE,
       this.focused,
       required this.hint,
@@ -42,6 +47,8 @@ class SBYTextField extends StatelessWidget {
           controller: controller,
           obscureText: isPassword,
           style: TextStyle(color: Colors.white, fontSize: fontSize),
+          keyboardType: inputType(),
+          inputFormatters: isDigitOnly ? [FilteringTextInputFormatter.digitsOnly] : [],
           decoration: !noPadding
               ? InputDecoration(
                   hintText: hint,
@@ -53,5 +60,11 @@ class SBYTextField extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  TextInputType inputType() {
+    if (isNumber) return const TextInputType.numberWithOptions(decimal: false, signed: false);
+    if (isDigitOnly) return TextInputType.number;
+    return TextInputType.text;
   }
 }

@@ -33,13 +33,13 @@ class UserConfirmScreen extends StatelessWidget {
             SBYUserLabel(label: 'ご住所（Address）', value: user.address, width: 200),
             SBYUserLabel(label: 'お電話番号（Phone）', value: user.tell, width: 200),
             SBYUserLabel(label: 'メールアドレス（E-mail）', value: user.email, width: 200),
-            SBYBottomBar(
-              onTouched: () async {
-                await saveUser(context);
-              },
-            )
           ],
         ),
+      ),
+      bottomNavigationBar: SBYBottomBar(
+        onTouched: () async {
+          await saveUser(context);
+        },
       ),
     );
   }
