@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tnguyen.shibuya">
+    package="com.tnnguyen.shibuya">
    <application
         android:label="shibuya"
         android:name="${applicationName}"

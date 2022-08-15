@@ -1,4 +1,4 @@
-package com.tnguyen.shibuya
+package com.tnnguyen.shibuya
 
 import io.flutter.embedding.android.FlutterActivity
 
